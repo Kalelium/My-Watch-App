@@ -38,7 +38,6 @@ let selected_app = ""
 let previously_selected_app = ""
 let menu_options: string[] = []
 let menu_open = false
-info.setScore(0)
 menu_open = false
 menu_options = ["Home", "Watch", "c", "None"]
 let app_list = ["a", "b", "c"]
