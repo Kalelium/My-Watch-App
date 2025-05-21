@@ -29,6 +29,8 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
         blockMenu.closeMenu()
     }
 })
+let light_bar_label: TextSprite = null
+let statusbar: StatusBarSprite = null
 let date: TextSprite = null
 let time: TextSprite = null
 let debug_loop_numb = 0
@@ -39,10 +41,10 @@ let previously_selected_app = ""
 let menu_options: string[] = []
 let menu_open = false
 menu_open = false
-menu_options = ["Home", "Watch", "c", "None"]
+menu_options = ["Watch", "Home", "Light Sensor", "None"]
 let app_list = ["a", "b", "c"]
 previously_selected_app = "None"
-selected_app = "Home"
+selected_app = "Watch"
 initialize_app = true
 app_sprites_list = []
 let mySprite = sprites.create(img`
@@ -212,6 +214,17 @@ game.onUpdate(function () {
         }
         time.setText(rtcModules.readTimeInFormat(TimeFormat.FORMATHMS))
         date.setText(rtcModules.readTimeInFormat(TimeFormat.FORMATYMD))
+    } else if (selected_app == "Light Sensor") {
+        if (initialize_app) {
+            scene.setBackgroundImage(assets.image`black-bg`)
+            statusbar = statusbars.create(100, 8, StatusBarKind.Energy)
+            statusbar.setColor(5, 12)
+            statusbar.value = controller.lightLevel()
+            statusbar.setPosition(80, 90)
+            light_bar_label = textsprite.create("Light (0 to 255)")
+            light_bar_label.setPosition(80, 80)
+            app_sprites_list = [light_bar_label]
+        }
     } else {
     	
     }
