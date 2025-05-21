@@ -1,8 +1,3 @@
-controller.start.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (menu_open) {
-    	
-    }
-})
 controller.C.onEvent(ControllerButtonEvent.Pressed, function () {
     if (menu_open) {
         blockMenu.setSelectedIndex(blockMenu.selectedMenuIndex() + 1)
@@ -219,16 +214,21 @@ game.onUpdate(function () {
             scene.setBackgroundImage(assets.image`black-bg`)
             statusbar = statusbars.create(100, 8, StatusBarKind.Energy)
             statusbar.setColor(5, 12)
-            statusbar.value = controller.lightLevel()
-            statusbar.setPosition(80, 90)
+            statusbar.value = controller.lightLevel() * (100 / 255)
             light_bar_label = textsprite.create("Light (0 to 255)")
+            statusbar.attachToSprite(light_bar_label)
             light_bar_label.setPosition(80, 80)
+            initialize_app = false
             app_sprites_list = [light_bar_label]
         }
+        statusbar.value = controller.lightLevel() * (100 / 255)
     } else {
     	
     }
 })
 game.onUpdateInterval(500, function () {
     mySprite.say(blockMenu.selectedMenuOption())
+    if (selected_app == "Light Sensor") {
+        mySprite.say(controller.lightLevel())
+    }
 })
